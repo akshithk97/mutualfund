@@ -1,6 +1,6 @@
-package com.aliceblue.mutualfund.model;
+package com.aliceblue.mutualfund.v3.model;
 
-import com.aliceblue.mutualfund.model.util.BaseModel;
+import com.aliceblue.mutualfund.v3.model.util.BaseModel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,19 +25,19 @@ public class MFOrder extends BaseModel {
     @Column(unique = true)
     private String OrderId;
     @Column(columnDefinition = "varchar(10) default '667001'")
-    private String UserID;
+    private String UserId;
     @Column(columnDefinition = "varchar(10) default '6670'")
     private String MemberId;
     @Column(nullable = false)
-    private String ClientCode;
+    private String ClientId;
     @Column(nullable = false)
-    private String SchemeCd;
+    private String SchemeCode;
     private String BuySell;
     private String BuySellType;
     @Column(columnDefinition = "varchar(10) default 'C'")
     private String DPTxn;
-    private String AMOUNT;
-    private String Qty;
+    private String Amount;
+    private String Quantity;
     private String AllRedeem;
     private String FolioNo;
     private String Remarks;
@@ -47,7 +47,7 @@ public class MFOrder extends BaseModel {
     private String SubBrCode;
     @Column(columnDefinition = "varchar(10) default 'E123456'")
     private String EUIN;
-    private String EUINflag;
+    private String EUINFlag;
     private String MinRedeem;
     private String DPC;
     private String IPAdd;
@@ -62,8 +62,9 @@ public class MFOrder extends BaseModel {
     private String SIPAmount;
     private String SIPTry;
     private String OrderStatusLastUpdatedAt;
-    private String UPIID;
+    private String UPIId;
     private String OrderStatus;
     private String OrderSentDate;
+    @Column(length = 510)
     private String OrderSentRemark;
 }

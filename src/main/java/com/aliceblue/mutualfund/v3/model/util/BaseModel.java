@@ -1,4 +1,4 @@
-package com.aliceblue.mutualfund.model.util;
+package com.aliceblue.mutualfund.v3.model.util;
 
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
@@ -15,10 +15,10 @@ public class BaseModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @CreationTimestamp
+//    @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
-    @UpdateTimestamp
+//    @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
 }
