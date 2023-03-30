@@ -4,12 +4,14 @@ import com.aliceblue.mutualfund.v2.service.DataService;
 import com.aliceblue.mutualfund.v3.model.MFRedemptionResponse;
 import com.aliceblue.mutualfund.v3.repository.MfRedemptionRepository;
 import com.aliceblue.mutualfund.v3.service.RedemptionService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@Slf4j
 public class RedemptionServiceImpl implements RedemptionService {
 
     @Autowired
@@ -22,6 +24,8 @@ public class RedemptionServiceImpl implements RedemptionService {
     public void migrateAllRedemptions() {
 
         List<com.aliceblue.mutualfund.v2.entity.MFRedemptionResponse> v2RedemptionList = v2DataService.getAllRedemptions();
+        log.info("Total redemptions - {}", v2RedemptionList.size());
+        int i=0;
         for (com.aliceblue.mutualfund.v2.entity.MFRedemptionResponse v2Redemption : v2RedemptionList)
         {
             MFRedemptionResponse redemptionResponse = redemptionRepository.findByOrderId(v2Redemption.getOrderNo()).orElse(new MFRedemptionResponse());
@@ -38,13 +42,13 @@ public class RedemptionServiceImpl implements RedemptionService {
             redemptionResponse.setOrderId(v2Redemption.getOrderNo());
             redemptionResponse.setQuantity(v2Redemption.getQty());
             redemptionResponse.setMemberId(v2Redemption.getMemberCode());
+            redemptionResponse.setClientId(v2Redemption.getClientCode());
             redemptionResponse.setOrderDate(v2Redemption.getOrderDate());
             redemptionResponse.setOrderType(v2Redemption.getOrderType());
             redemptionResponse.setCreatedAt(v2Redemption.getCreatedAt());
             redemptionResponse.setUpdatedAt(v2Redemption.getUpdatedAt());
             redemptionResponse.setValidFlag(v2Redemption.getValidFlag());
             redemptionResponse.setBranchCode(v2Redemption.getBranchCode());
-            redemptionResponse.setClientCode(v2Redemption.getClientCode());
             redemptionResponse.setClientName(v2Redemption.getClientName());
             redemptionResponse.setReportDate(v2Redemption.getReportDate());
             redemptionResponse.setRTATransNo(v2Redemption.getRTATransNo());
@@ -57,6 +61,19 @@ public class RedemptionServiceImpl implements RedemptionService {
             redemptionResponse.setRedeemedAmount(v2Redemption.getAmt());
             redemptionResponse.setSettlementType(v2Redemption.getSettType());
             redemptionRepository.save(redemptionResponse);
+            i++;
         }
+        log.info("Total redemptions added - {}", i);
+    }
+
+    @Override
+    public List<MFRedemptionResponse> getAllRedemptions(String clientId, String schemeCode) {
+        return redemptionRepository.getAllRedemptions(clientId, schemeCode);
+    }
+
+    @Override
+    public Double getAllRedeemedUnits(String clientId, String schemeCode) {
+         return redemptionRepository.getAllRedeemedUnits(clientId, schemeCode) == null ? 0.0
+                 : redemptionRepository.getAllRedeemedUnits(clientId, schemeCode);
     }
 }

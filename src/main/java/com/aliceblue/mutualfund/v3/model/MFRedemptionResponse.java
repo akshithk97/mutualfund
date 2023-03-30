@@ -31,7 +31,7 @@ public class MFRedemptionResponse extends BaseModel {
     String FolioNo;
     String RTASchemeCode;
     String RTATransNo;
-    String ClientCode;
+    String ClientId;
     String ClientName;
     String BeneficiaryId;
     Double NAV;

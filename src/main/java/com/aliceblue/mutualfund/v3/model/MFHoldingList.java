@@ -27,7 +27,7 @@ public class MFHoldingList extends BaseModel {
     @Column(nullable = false)
     String ClientId;
     @Column(nullable = false)
-    String AllottedNAV;
+    Double AllottedNAV;
     @Column(nullable = false)
-    String AllottedUnit;
+    Double AllottedUnit;
 }
