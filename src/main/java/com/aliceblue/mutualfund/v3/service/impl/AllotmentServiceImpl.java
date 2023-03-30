@@ -4,12 +4,14 @@ import com.aliceblue.mutualfund.v2.service.DataService;
 import com.aliceblue.mutualfund.v3.model.MFAllotmentResponse;
 import com.aliceblue.mutualfund.v3.repository.MFAllotmentRepository;
 import com.aliceblue.mutualfund.v3.service.AllotmentService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@Slf4j
 public class AllotmentServiceImpl implements AllotmentService {
 
     @Autowired
@@ -22,6 +24,8 @@ public class AllotmentServiceImpl implements AllotmentService {
     public void migrateAllAllotments()
     {
         List<com.aliceblue.mutualfund.v2.entity.MFAllotmentResponse> v2AllotmentList = v2DataService.getAllAllotments();
+        log.info("v2 allotments - {}",v2AllotmentList.size());
+        int i=0;
         for (com.aliceblue.mutualfund.v2.entity.MFAllotmentResponse v2Allotment : v2AllotmentList)
         {
             MFAllotmentResponse allotmentResponse = allotmentRepository.findByOrderId(v2Allotment.getORDERNO()).orElse(new MFAllotmentResponse());
@@ -63,6 +67,14 @@ public class AllotmentServiceImpl implements AllotmentService {
             allotmentResponse.setSettlementType(v2Allotment.getSETTLEMENT_TYPE());
             allotmentResponse.setAllotmentAmount(v2Allotment.getALLOTMENT_AMOUNT());
             allotmentRepository.save(allotmentResponse);
+            i++;
         }
+        log.info("allotment added - {}",i);
+    }
+
+    @Override
+    public List<MFAllotmentResponse> getAllAllotments(String clientId, String schemeCode)
+    {
+        return allotmentRepository.getAllAllotments(clientId, schemeCode);
     }
 }

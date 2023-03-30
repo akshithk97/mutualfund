@@ -34,6 +34,7 @@ public class OrderServiceImpl implements OrderService {
                 order.setEUIN(v2Order.getEUIN());
                 order.setIPAdd(v2Order.getIPAdd());
                 order.setDPTxn(v2Order.getDPTxn());
+                order.setRefNo(v2Order.getRefNo());
                 order.setUPIId(v2Order.getUPIID());
                 order.setAmount(v2Order.getAMOUNT());
                 order.setPARAM1(v2Order.getPARAM1());
@@ -79,5 +80,15 @@ public class OrderServiceImpl implements OrderService {
 //            index--;
 ////            break;
 //        }
+    }
+
+    @Override
+    public MFOrder findByOrderId(String orderId) {
+        return orderRepository.findByOrderId(orderId).orElse(new MFOrder());
+    }
+
+    @Override
+    public List<MFOrder> findAllClientsBySchemeCode() {
+        return orderRepository.findAllClientsBySchemeCode();
     }
 }

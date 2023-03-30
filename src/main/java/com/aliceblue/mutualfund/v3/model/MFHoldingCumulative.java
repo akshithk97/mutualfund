@@ -14,9 +14,9 @@ import javax.persistence.Table;
 public class MFHoldingCumulative extends BaseModel {
 
     @Column(unique = true, nullable = false)
-    String UniqueReferenceNumber;
+    String RefNumber;
     String ClientId;
     String SchemeCode;
-    String Unit;
+    Double Unit;
 
 }

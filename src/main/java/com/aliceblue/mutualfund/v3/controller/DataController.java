@@ -1,6 +1,7 @@
 package com.aliceblue.mutualfund.v3.controller;
 
 import com.aliceblue.mutualfund.v3.service.AllotmentService;
+import com.aliceblue.mutualfund.v3.service.HoldingsService;
 import com.aliceblue.mutualfund.v3.service.OrderService;
 import com.aliceblue.mutualfund.v3.service.RedemptionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ public class DataController {
     @Autowired
     RedemptionService redemptionService;
 
+    @Autowired
+    HoldingsService holdingsService;
+
     @GetMapping(value = "/orders")
     public String migrateOrders()
     {
@@ -40,5 +44,12 @@ public class DataController {
     {
         redemptionService.migrateAllRedemptions();
         return "Redemptions migrated successfully";
+    }
+
+    @GetMapping(value = "/holdings")
+    public String calculateHoldings()
+    {
+        holdingsService.calculateAllClientsHolding();
+        return "Holdings are updated successfully";
     }
 }

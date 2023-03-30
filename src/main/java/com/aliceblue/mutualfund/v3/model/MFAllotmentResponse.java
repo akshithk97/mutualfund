@@ -34,9 +34,9 @@ public class MFAllotmentResponse extends BaseModel {
     String ClientId;
     String ClientName;
     String BeneficiaryId;
-    String AllottedNAV;
-    String AllottedUnit;
-    String AllotmentAmount;
+    Double AllottedNAV;
+    Double AllottedUnit;
+    Double AllotmentAmount;
     String ValidFlag;
     String Remarks;
     String STT;

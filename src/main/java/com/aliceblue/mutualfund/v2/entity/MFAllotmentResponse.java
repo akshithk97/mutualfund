@@ -33,9 +33,9 @@ public class MFAllotmentResponse {
     String CLIENT_CODE;
     String CLIENT_NAME;
     String BENEFICIARYID;
-    String ALLOTTED_NAV;
-    String ALLOTTED_UNIT;
-    String ALLOTMENT_AMOUNT;
+    Double ALLOTTED_NAV;
+    Double ALLOTTED_UNIT;
+    Double ALLOTMENT_AMOUNT;
     String VALIDFLAG;
     String REMARKS;
     String STT;
