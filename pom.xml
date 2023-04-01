@@ -54,7 +54,7 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
-			<version>2.6.6</version>
+			<version>3.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -66,6 +66,26 @@
 			<artifactId>awaitility</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<!--	SOAP DEPENDENCIES START	-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web-services</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-tomcat</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.ws</groupId>
+			<artifactId>spring-ws-core</artifactId>
+			<version>3.1.3</version>
+		</dependency>
+		<!--	SOAP DEPENDENCIES END	-->
+
 	</dependencies>
 
 	<build>
@@ -83,6 +103,51 @@
 						</exclude>
 					</excludes>
 				</configuration>
+			</plugin>
+
+			<!--EXTRACT SOURCE CODE FROM WSDL-->
+			<plugin>
+				<groupId>org.jvnet.jaxb2.maven2</groupId>
+				<artifactId>maven-jaxb2-plugin</artifactId>
+				<version>0.14.0</version>
+				<executions>
+					<execution>
+						<id>MFOrder</id>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<schemaLanguage>WSDL</schemaLanguage>
+							<generateDirectory>${project.build.sourceDirectory}/com/aliceblue/mutualfund</generateDirectory>
+							<generatePackage>in.bsestarmf</generatePackage>
+							<schemas>
+								<schema>
+									<url></url>
+								</schema>
+							</schemas>
+						</configuration>
+					</execution>
+
+					<execution>
+						<id>StarMFWebService</id>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<args>
+								<arg>-XautoNameResolution</arg>
+							</args>
+							<schemaLanguage>WSDL</schemaLanguage>
+							<generateDirectory>${project.build.sourceDirectory}/com/aliceblue/mutualfund</generateDirectory>
+							<generatePackage>in.istarmfwebservice</generatePackage>
+							<schemas>
+								<schema>
+									<url></url>
+								</schema>
+							</schemas>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
